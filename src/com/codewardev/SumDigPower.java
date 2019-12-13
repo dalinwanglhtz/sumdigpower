@@ -12,16 +12,12 @@ public class SumDigPower {
 	public static List<Long> sumDigPow(long a, long b) {
 		List<Long> result = new ArrayList<Long>();
 		
-		for(long i=a; i<b; i++) {
-			String iString = Long.toString(i);
-			String[] iArray = iString.split("");
-			int sum = IntStream.range(0, iString.length())
-			.map(x->(int)Math.pow(Double.valueOf(iArray[x]), Double.valueOf(x)+1)).sum();
-			if(i==sum) {
-				System.out.println("Found for "+i+"="+sum);
-				result.add(i);
-			}
-		}
+		LongStream.range(a, b).boxed().forEach(i->{
+			String[] iArray = Long.toString(i).split("");
+			if(i==IntStream.range(0, iArray.length)
+					.map(x->(int) Math.pow(Double.valueOf(iArray[x]), Double.valueOf(x)+1))
+					.sum()) result.add(i);
+		});
 		
 		return result;
 	}
